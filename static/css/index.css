@@ -1,4 +1,11 @@
+body{
+	background-color: #112132;
+}
+
 .header{
+	margin-top: -8px;
+	margin-left: -8px;
+	margin-right: -8px;
 	background-color:black;
 	color:white;
 	height: 40px;
@@ -15,4 +22,35 @@
 	margin-top: 10px;
 	margin-left: 10px;
 	
+}
+
+
+.body_section{
+
+}
+
+
+.body_part_left{
+	height: 150px;
+	width: 60%;
+	background-color: #13273a;
+	float:left;
+}
+
+.body_part_left_content{
+	color:white;
+	text-align: center;
+}
+
+.body_part_right{
+	height: 150px;
+	width: 39.5%;
+	margin-left: 0.5%;
+	background-color: #13273a;
+	float:left;
+}
+
+.body_part_right_content{
+	color:white;
+	text-align: center;
 }

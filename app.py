@@ -28,5 +28,29 @@ def index():
 	return render_template('index.html')
 
 
+@app.route('/challenges', methods=['GET', 'POST'])
+def challenges():
+	db=MySQLdb.connect(host="localhost",user="root",passwd="FlagFlag123.",db="hackit" )
+	cursor = db.cursor()
+	cursor.execute("SELECT * FROM challenges")
+	data = cursor.fetchall()
+	print (data)
+	return render_template('challenges.html')
+
+
+@app.route('/getCategoryDetails', methods=['GET', 'POST'])
+def getCategoryDetails():
+	db=MySQLdb.connect(host="localhost",user="root",passwd="FlagFlag123.",db="hackit" )
+	cursor = db.cursor()
+	cursor.execute("SELECT challenges.Nume,Puncte,users.Nume,Autor,Dificultate,Location FROM challenges inner join users ON users.ID=challenges.Firstblood")
+	data = cursor.fetchall()
+	ceva=[]
+	forret=[]
+	for i in data:
+		ceva.append(i)
+	for i in ceva:
+		forret.append("|".join(str(v) for v in i))
+	print (forret)
+	return "^".join(forret)
 
 
