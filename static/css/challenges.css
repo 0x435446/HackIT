@@ -65,11 +65,11 @@ body{
 	float:left;
 	width: 40px;
 	height: 47px;
-	background-image: url("../../static/images/menu.png");
+	background-image: url("../../static/images/menu3.png");
 }
 
 .body_part_right{
-	height: 150px;
+	height: auto;
 	width: 90%;
 	margin-left: 2%;
 	background-color: #13273a;
@@ -123,4 +123,55 @@ body{
 .clickbutton{
 	background-color: transparent;
 	border: none;
+}
+
+.xbutton{
+	background-color: transparent;
+	border: none;
+	color: white;
+}
+
+
+.modal{
+	display: none;
+	width: 80%;
+	height: 600px;
+	background-color: rgb(0,0,0,0.9);
+	position: absolute;
+	color:white;
+	margin-left: 10%;
+	margin-right: 10%;
+}
+
+.modal_details{
+	color:white;
+	margin-left: 10px;
+	margin-top: 10px;
+
+}
+
+.modal_close{
+	color:red;
+	position: relative;
+	text-align: right;
+}
+
+input[type=submit] {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=text], select {
+  width: 40%;
+  padding: 5px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }

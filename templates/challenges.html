@@ -14,17 +14,19 @@
 			<div class='header_section' onclick="location.href='/';">
 				Home
 			</div>	
-			<div class='header_section' onclick="location.href='/login';">
-				Login
-			</div>	
 			<div class='header_section' onclick="location.href='/challenges';">
 				Challenges
+			</div>	
+			<div class='header_section' onclick="location.href='/logout';">
+				Logout
 			</div>	
 		</div>
 	</div>
 
 
 	<div class='body_section'>
+
+		
 
 		<div class='body_part_left' id='ctfs'>
 			<div class='body_part_left_content' onclick="getCategoryDetails('Forensics')">
@@ -53,6 +55,10 @@
 			</div>
 		</div>
 
+
+		<div class='modal' id="Modal">
+			
+		</div>
 	</div>
 
 </body>
@@ -77,6 +83,10 @@
 				var response = this.responseText;
 				var challenges=response.split("^");
 				var continut="";
+				continut+="<form action=\"/submitFlag\">\
+				<input type=\"text\" id=\"flag\" name=\"flag\">\
+				<input type=\"submit\" value=\"Submit\">\
+				</form>";
 				for(var i=0;i<challenges.length;i++){
 					continut+="<div class='body_part_right_content_box_lower'>\n";
 					continut+="&nbsp;\n";
@@ -86,7 +96,11 @@
 						continut+=challenges[i][j];
 						continut+="</div>\n";
 					}
-			  		continut+="<a href=\"/"+challenges[i][5]+"\" target=\"blank\"><button class='clickbutton';\"><img src=\"{{url_for('static', filename='images/play2.svg', width=100)}}\" /></button></a>\n<br>\n";
+			  		//continut+="<a href=\"/"+challenges[i][5]+"\" target=\"blank\"><button class='clickbutton';\"><img src=\"{{url_for('static', filename='images/play2.svg', width=100)}}\" /></button></a>\n<br>\n";
+			  		continut+="<button class='clickbutton' onclick=\"modal('"+challenges[i][0]+"')\">\
+			  		<img src=\"{{url_for('static', filename='images/play2.svg')}}\" />\
+			  		</button>\
+			  		\n<br>\n";
 					continut+="</div>\n";
 				}
 				document.getElementById("body_part_right_content").innerHTML=continut;
@@ -97,4 +111,47 @@
 		xhttp.send("Category="+Category);
 
 	}
+</script>
+
+
+
+<script>
+	var Mod = 0;
+	function modal(Challenge) {
+		if (Mod == 0){
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var response = this.responseText.split("|");
+				var contentModal="<div class='modal_close'>\
+				<button class='xbutton' onclick=\"modal('None')\">X</button>\
+				</div>\
+				<div class='modal_details'>\
+					Name: "+response[0]+"\
+				<br></div>\
+				<div class='modal_details'>\
+					Points:"+response[1]+"\
+				<br></div>\
+				<div class='modal_details'>\
+					Description:"+response[2]+"\
+				<br></div>\
+				<div class='modal_details'>\
+					DOWNLOAD: <a href=\"/"+response[3]+"\" target=\"blank\">HERE</a>\
+				<br>\
+				</div>"
+				document.getElementById("Modal").innerHTML=contentModal;
+			}
+		};
+		xhttp.open("POST", "/getChallengeDetails", true);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhttp.send("Challenge="+Challenge);
+			Mod = 1;
+			document.getElementById("Modal").style.display="block";
+		}
+		else if (Mod == 1){
+			Mod = 0;
+			document.getElementById("Modal").style.display="none";
+		}
+	}
+
 </script>

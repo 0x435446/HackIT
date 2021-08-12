@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+	    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+		<title></title>
+	</head>
+
+	<body>
+
+		<div class='header'>
+
+			<div class='header_center'>
+				<div class='header_section' onclick="location.href='/';">
+					Home
+				</div>	
+				<div class='header_section' onclick="location.href='/login';">
+					Login
+				</div>	
+			</div>
+		</div>
+
+
+		<div class='body_section'>
+
+			<div class='body_part_left'>
+				<form action="/log" method="POST">
+					<label for="fname">Username:</label>
+					<input type="text" id="username" name="username"><br><br>
+					<label for="lname">Password:</label>
+					<input type="password" id="password" name="password"><br><br>
+					<input type="submit" value="Submit">
+				</form> 
+			</div>
+
+			
+
+		</div>
+
+	</body>
+</html>
