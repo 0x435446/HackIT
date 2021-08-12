@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/challenges.css') }}">
+	<title></title>
+</head>
+
+<body>
+
+	<div class='header'>
+
+		<div class='header_center'>
+			<div class='header_section' onclick="location.href='/';">
+				Home
+			</div>	
+			<div class='header_section' onclick="location.href='/login';">
+				Login
+			</div>	
+			<div class='header_section' onclick="location.href='/challenges';">
+				Challenges
+			</div>	
+		</div>
+	</div>
+
+
+	<div class='body_section'>
+
+		<div class='body_part_left' id='ctfs'>
+			<div class='body_part_left_content' onclick="getCategoryDetails('Forensics')">
+				Forensics
+			</div>
+			<div class='body_part_left_content' onclick="getCategoryDetails('Cryptography')">
+				Cryptography
+			</div>
+			<div class='body_part_left_content' onclick="getCategoryDetails('Reversing')">
+				Reversing
+			</div>
+			<div class='body_part_left_content' onclick="getCategoryDetails('Pwn')">
+				Pwn
+			</div>
+			<div class='body_part_left_content' onclick="getCategoryDetails('Networking')">
+				Networking
+			</div>
+		</div>
+
+		<div class='body_part_left_menu' onclick="openMenu()" id='menu'>
+			&nbsp
+		</div>
+		<div class='body_part_right' id="content">
+			<div class='body_part_right_content' id='body_part_right_content'>
+
+			</div>
+		</div>
+
+	</div>
+
+</body>
+</html>
+
+
+<script>
+	function openMenu(){
+		document.getElementById("menu").style.display="none";
+		document.getElementById("ctfs").style.transitionDuration ="1s";
+		document.getElementById("ctfs").style.display="block";
+		document.getElementById("content").style.width="80%";
+	}
+</script>
+
+
+<script>
+	function getCategoryDetails(Category){
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var response = this.responseText;
+				var challenges=response.split("^");
+				var continut="";
+				for(var i=0;i<challenges.length;i++){
+					continut+="<div class='body_part_right_content_box_lower'>\n";
+					continut+="&nbsp;\n";
+					challenges[i]=challenges[i].split("|");
+					for(var j=0;j<challenges[i].length-1;j++){
+						continut+="<div class='body_part_right_content_box_part_lower'>\n";
+						continut+=challenges[i][j];
+						continut+="</div>\n";
+					}
+			  		continut+="<a href=\"/"+challenges[i][5]+"\" target=\"blank\"><button class='clickbutton';\"><img src=\"{{url_for('static', filename='images/play2.svg', width=100)}}\" /></button></a>\n<br>\n";
+					continut+="</div>\n";
+				}
+				document.getElementById("body_part_right_content").innerHTML=continut;
+			}
+		};
+		xhttp.open("POST", "/getCategoryDetails", true);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhttp.send("Category="+Category);
+
+	}
+</script>

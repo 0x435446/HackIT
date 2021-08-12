@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import render_template,jsonify
-from flask import request,redirect,session,send_file
+from flask import request,redirect,session,send_file,send_from_directory
 from hashlib import sha256
 import importlib.util
 import MySQLdb
@@ -42,7 +42,8 @@ def challenges():
 def getCategoryDetails():
 	db=MySQLdb.connect(host="localhost",user="root",passwd="FlagFlag123.",db="hackit" )
 	cursor = db.cursor()
-	cursor.execute("SELECT challenges.Nume,Puncte,users.Nume,Autor,Dificultate,Location FROM challenges inner join users ON users.ID=challenges.Firstblood")
+	print (request.form['Category'])
+	cursor.execute("SELECT challenges.Nume,Puncte,users.Nume,Autor,Dificultate,Location FROM challenges inner join users ON users.ID=challenges.Firstblood WHERE challenges.Categorie='"+request.form['Category']+"'")
 	data = cursor.fetchall()
 	ceva=[]
 	forret=[]
@@ -53,4 +54,6 @@ def getCategoryDetails():
 	print (forret)
 	return "^".join(forret)
 
-
+@app.route('/Challenges/<path:filename>', methods=['GET', 'POST'])
+def download(filename):    
+    return send_from_directory(directory='Challenges', filename=filename)
