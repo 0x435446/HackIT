@@ -44,6 +44,9 @@
 			<div class='body_part_left_content' onclick="getCategoryDetails('Networking')">
 				Networking
 			</div>
+			<div class='body_part_left_content' onclick="getCategoryDetails('Web')">
+				Web
+			</div>
 		</div>
 
 		<div class='body_part_left_menu' onclick="openMenu()" id='menu'>
@@ -81,16 +84,23 @@
 		xhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
 				var response = this.responseText;
-				var challenges=response.split("^");
+				
+				var part1 = response.split("~")[0];
+				var part2 = response.split("~")[1].split("|");
+
+				var challenges=part1.split("^");
 				var continut="";
-				continut+="<form action=\"/submitFlag\">\
+				continut+="<form action=\"/submitFlag\" method=\"POST\">\
 				<input type=\"text\" id=\"flag\" name=\"flag\">\
 				<input type=\"submit\" value=\"Submit\">\
 				</form>";
 				for(var i=0;i<challenges.length;i++){
-					continut+="<div class='body_part_right_content_box_lower'>\n";
-					continut+="&nbsp;\n";
 					challenges[i]=challenges[i].split("|");
+					if (part2.indexOf(challenges[i][0]) == -1)
+						continut+="<div class='body_part_right_content_box_lower'>\n";
+					if (part2.indexOf(challenges[i][0]) != -1)
+						continut+="<div class='body_part_right_content_box_lower_solved'>\n";
+					continut+="&nbsp;\n";
 					for(var j=0;j<challenges[i].length-1;j++){
 						continut+="<div class='body_part_right_content_box_part_lower'>\n";
 						continut+=challenges[i][j];

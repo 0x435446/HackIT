@@ -8,34 +8,67 @@
 
 	<body>
 
-		<div class='header'>
+		<div class='just_a_div'>
+			<div class='header'>
 
-			<div class='header_center'>
-				<div class='header_section' onclick="location.href='/';">
-					Home
-				</div>	
-				<div class='header_section' onclick="location.href='/login';">
-					Login
-				</div>	
-			</div>
-		</div>
-
-
-		<div class='body_section'>
-
-			<div class='body_part_left'>
-				<form action="/log" method="POST">
-					<label for="fname">Username:</label>
-					<input type="text" id="username" name="username"><br><br>
-					<label for="lname">Password:</label>
-					<input type="password" id="password" name="password"><br><br>
-					<input type="submit" value="Submit">
-				</form> 
+				<div class='header_center'>
+					<div class='header_section' onclick="location.href='/';">
+						Home
+					</div>	
+					<div class='header_section' onclick="location.href='/login';">
+						Login
+					</div>	
+				</div>
 			</div>
 
-			
+
+			<div class='body_section'>
+
+				<div class='body_part_left'>
+					<form action="/log" method="POST">
+						<label for="fname">Username:</label>
+						<input type="text" id="username" name="username"><br><br>
+						<label for="lname">Password:</label>
+						<input type="password" id="password" name="password"><br><br>
+						<input type="submit" value="Submit">
+					</form> 
+				</div>
+
+			<div class='body_register' id='a'>
+				<div class='body_part_left_register' id='hideMe'>
+					<form action="/register" method="POST">
+						<label for="fname">Username:</label>
+						<input type="text" id="username" name="username"><br><br>
+						<label for="lname">Password:</label>
+						<input type="password" id="password" name="password"><br><br>
+						<label for="lname">Email:</label>
+						<input type="password" id="email" name="email"><br><br>
+						<input type="submit" value="Submit">
+					</form> 
+				</div>
+
+			</div>
+
+			</div>
 
 		</div>
 
 	</body>
 </html>
+
+
+
+<script>
+	function checkTasks(){
+	var len = document.getElementById('a').offsetWidth;
+	if (len>100){
+		document.getElementById('hideMe').style.display='block';
+	}
+	else{
+		document.getElementById('hideMe').style.display='none';
+	}
+    setTimeout(checkTasks, 1000);
+}
+checkTasks(); // Start task checking
+
+</script>

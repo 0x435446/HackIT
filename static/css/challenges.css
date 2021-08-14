@@ -120,6 +120,13 @@ body{
 	border-bottom: 1px solid white;
 }
 
+.body_part_right_content_box_lower_solved{
+	margin-right: 50px;
+	margin-left: 50px;
+	font-size: 25px;
+	border-bottom: 1px solid green;
+}
+
 .clickbutton{
 	background-color: transparent;
 	border: none;
