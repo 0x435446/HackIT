@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+	<title></title>
+</head>
+
+<body>
+
+	<div class='header'>
+
+		<div class='header_center'>
+			<div class='header_section' onclick="location.href='/';">
+				Home
+			</div>	
+			<div class='header_section' onclick="location.href='/challenges';">
+				Challenges
+			</div>	
+			<div class='header_section' onclick="location.href='/profile';">
+				Profile
+			</div>	
+			<div class='header_section' onclick="location.href='/logout';">
+				Logout
+			</div>	
+		</div>
+	</div>
+
+
+	<div class='body_section'>
+
+		<div class='body_part_left'>
+			<div class='body_part_left_content_up'>
+				<div class='body_part_left_content_up_name'>
+					{{Username}}
+				</div>
+				<div class='body_part_left_content_up_details'>
+					<div class='body_part_left_content_up_details_sus'>
+						<img src="{{url_for('static', filename='images/Noaccount.jpg')}}" /><br>
+						Points: {{Puncte}} <br>
+						Scoreboard: 1st <br>
+						Rank: Admin
+					</div>
+
+					<div class="progressbar2">
+						{{Web_Solved}}/{{Total_Web}}
+						<span style="float: left">Web</span>
+						<div class="progressbars">
+							<div class="progress" id="web_progress">
+							
+							</div>
+						</div>
+					</div>		
+					 
+					<div class="progressbar">
+						{{Networking_Solved}}/{{Total_Networking}}
+						<span style="float: left">Networking</span>
+						<div class="progressbars">
+							<div class="progress" id="networking_progress">
+							
+							</div>
+						</div>
+					</div>		
+					 
+					<div class="progressbar">
+						{{Forensics_Solved}}/{{Total_Forensics}}
+						<span style="float: left">Forensics</span>
+						<div class="progressbars">
+							<div class="progress" id="forensics_progress">
+							
+							</div>
+						</div>
+					</div>		
+
+					<div class="progressbar">
+						{{Cryptography_Solved}}/{{Total_Crypto}}
+						<span style="float: left">Crypto</span>
+						<div class="progressbars">
+							<div class="progress" id="crypto_progress">
+							
+							</div>
+						</div>
+					</div>		
+					
+					<div class="progressbar">
+						{{Reversing_Solved}}/{{Total_Reversing}}
+						<span style="float: left">Reversing</span>
+						<div class="progressbars">
+							<div class="progress" id="reversing_progress">
+							
+							</div>
+						</div>
+					</div>
+					
+
+
+				</div>
+
+
+			</div>
+		</div>
+
+	</div>
+
+</body>
+</html>
+
+
+<script>
+	var procentajNetworking=parseInt("{{Networking_Solved}}")/parseInt("{{Total_Networking}}")*100;
+	procentajNetworking = procentajNetworking.toString()+"%";
+	document.getElementById("networking_progress").style.width = procentajNetworking;
+
+	var procentajForensics=parseInt("{{Forensics_Solved}}")/parseInt("{{Total_Forensics}}")*100;
+	procentajForensics = procentajForensics.toString()+"%";
+	document.getElementById("forensics_progress").style.width = procentajForensics;
+
+	var procentajCrypto=parseInt("{{Cryptography_Solved}}")/parseInt("{{Total_Crypto}}")*100;
+	procentajCrypto = procentajCrypto.toString()+"%";
+	document.getElementById("crypto_progress").style.width = procentajCrypto;
+
+	var procentajReversing=parseInt("{{Reversing_Solved}}")/parseInt("{{Total_Reversing}}")*100;
+	procentajReversing = procentajReversing.toString()+"%";
+	document.getElementById("reversing_progress").style.width = procentajReversing;
+
+	var procentajWeb=parseInt("{{Web_Solved}}")/parseInt("{{Total_Web}}")*100;
+	procentajWeb = procentajWeb.toString()+"%";
+	document.getElementById("web_progress").style.width = procentajWeb;
+</script>
