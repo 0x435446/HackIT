@@ -168,7 +168,7 @@ def register():
 @app.route('/submitFlag', methods=['GET', 'POST'])
 def submitFlag():
 	if session['loggedin'] == True:
-		flag = MySQLdb.escape_string(request.form['flag'])
+		flag = str(MySQLdb.escape_string(request.form['flag']))
 		db=MySQLdb.connect(host="localhost",user="root",passwd="FlagFlag123.",db="hackit" )
 		cursor = db.cursor()
 		cursor.execute("SELECT ID, challenges.Nume,Puncte FROM challenges WHERE challenges.Flag='"+flag+"'")
