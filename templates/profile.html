@@ -20,6 +20,9 @@
 			<div class='header_section' onclick="location.href='/profile';">
 				Profile
 			</div>	
+			<div class='header_section' onclick="location.href='/scoreboard';">
+				Scoreboard
+			</div>	
 			<div class='header_section' onclick="location.href='/logout';">
 				Logout
 			</div>	
@@ -32,14 +35,15 @@
 		<div class='body_part_left'>
 			<div class='body_part_left_content_up'>
 				<div class='body_part_left_content_up_name'>
-					{{Username}}
+					&nbsp;
 				</div>
 				<div class='body_part_left_content_up_details'>
 					<div class='body_part_left_content_up_details_sus'>
 						<img src="{{url_for('static', filename='images/Noaccount.jpg')}}" /><br>
+						{{Username}}<br>
 						Points: {{Puncte}} <br>
 						Scoreboard: 1st <br>
-						Rank: Admin
+						Rank: {{Rank}}
 					</div>
 
 					<div class="progressbar2">
@@ -91,11 +95,46 @@
 							</div>
 						</div>
 					</div>
-					
+				</div>
+
+
+				<div class='body_part_right_content_up_details'>
+					<div class='body_part_right_content_up_details_part'>
+						Badge
+					</div>
+					<div class='body_part_right_content_up_details_part'>
+						Badge
+					</div>
+					<div class='body_part_right_content_up_details_part'>
+						Badge
+					</div>
+					<div class='body_part_right_content_up_details_part'>
+						Badge
+					</div>
+					<div class='body_part_right_content_up_details_part'>
+						Badge
+					</div>
+					<div class='body_part_right_content_up_details_part'>
+						Badge
+					</div>
+					<div class='body_part_right_content_up_details_part'>
+						Badge
+					</div>
+					<div class='body_part_right_content_up_details_part'>
+						Badge
+					</div>
+				</div>
+
+
+				<div class="body_part_right_content_down_details">
+					{% for item in lastSolves %}
+					<div class="body_part_right_content_down_details_part">
+						{{Username}} solved {{ item }} 
+					</div>
+					{% endfor %}
 
 
 				</div>
-
 
 			</div>
 		</div>

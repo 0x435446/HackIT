@@ -131,6 +131,7 @@ def log():
 							session['loggedin'] = True
 							session['username']=username
 							session['ID']=users[i][0]
+							session['Rank']=users[i][5]
 						else:
 							print ("INCORRECT")
 					else:
@@ -231,10 +232,12 @@ def profile():
 		cursor.execute("SELECT DISTINCT challenges.Nume, solves.ID_user FROM challenges inner join solves ON solves.ID_challenge=challenges.ID WHERE challenges.Categorie='Networking'")
 		data = cursor.fetchall()
 		solved = []
+		last_solves=[]
 		retSolved=[]
 		for i in data:
 			if str(i[1]) == str(session['ID']):
 				solved.append(i[0])
+				last_solves.append(i[0])
 		Networking_Solved = len(solved)
 
 		cursor.execute("SELECT DISTINCT challenges.Nume, solves.ID_user FROM challenges inner join solves ON solves.ID_challenge=challenges.ID WHERE challenges.Categorie='Forensics'")
@@ -244,6 +247,7 @@ def profile():
 		for i in data:
 			if str(i[1]) == str(session['ID']):
 				solved.append(i[0])
+				last_solves.append(i[0])
 		Forensics_Solved = len(solved)
 
 		cursor.execute("SELECT DISTINCT challenges.Nume, solves.ID_user FROM challenges inner join solves ON solves.ID_challenge=challenges.ID WHERE challenges.Categorie='Web'")
@@ -253,6 +257,7 @@ def profile():
 		for i in data:
 			if str(i[1]) == str(session['ID']):
 				solved.append(i[0])
+				last_solves.append(i[0])
 		Web_Solved = len(solved)
 
 		cursor.execute("SELECT DISTINCT challenges.Nume, solves.ID_user FROM challenges inner join solves ON solves.ID_challenge=challenges.ID WHERE challenges.Categorie='Cryptography'")
@@ -262,6 +267,7 @@ def profile():
 		for i in data:
 			if str(i[1]) == str(session['ID']):
 				solved.append(i[0])
+				last_solves.append(i[0])
 		Cryptography_Solved = len(solved)
 
 		cursor.execute("SELECT DISTINCT challenges.Nume, solves.ID_user FROM challenges inner join solves ON solves.ID_challenge=challenges.ID WHERE challenges.Categorie='Reversing'")
@@ -271,6 +277,7 @@ def profile():
 		for i in data:
 			if str(i[1]) == str(session['ID']):
 				solved.append(i[0])
+				last_solves.append(i[0])
 		Reversing_Solved = len(solved)
 
 		cursor.execute("SELECT DISTINCT challenges.Nume, solves.ID_user FROM challenges inner join solves ON solves.ID_challenge=challenges.ID WHERE challenges.Categorie='Pwn'")
@@ -280,6 +287,7 @@ def profile():
 		for i in data:
 			if str(i[1]) == str(session['ID']):
 				solved.append(i[0])
+				last_solves.append(i[0])
 		Pwn_Solved = len(solved)
 
 		cursor.execute("SELECT DISTINCT challenges.Nume, solves.ID_user FROM challenges inner join solves ON solves.ID_challenge=challenges.ID WHERE challenges.Categorie='Misc'")
@@ -289,8 +297,10 @@ def profile():
 		for i in data:
 			if str(i[1]) == str(session['ID']):
 				solved.append(i[0])
+				last_solves.append(i[0])
 		Misc_Solved = len(solved)
 
+		print ("AICI E",last_solves)
 
 		cursor.execute("SELECT challenges.Nume FROM challenges WHERE challenges.Categorie='Networking'")
 		data = cursor.fetchall()
@@ -314,12 +324,13 @@ def profile():
 		cursor.execute("SELECT users.Puncte FROM users WHERE users.ID='"+str(session['ID'])+"'")
 		data = cursor.fetchall()
 		Puncte_user=data[0][0]
-		print ("AICI BOSS",Puncte_user)
-
+		print ("rank",session['Rank'])
 		return render_template('profile.html',
 			Networking_Solved=Networking_Solved, Forensics_Solved=Forensics_Solved, Web_Solved=Web_Solved, Cryptography_Solved=Cryptography_Solved, Reversing_Solved=Reversing_Solved, Pwn_Solved=Pwn_Solved,
 			Total_Networking = Total_Networking, Total_Forensics=Total_Forensics, Total_Web=Total_Web, Total_Crypto=Total_Crypto, Total_Reversing=Total_Reversing,Total_Pwn=Total_Pwn,
 			Username=session['username'],
-			Puncte=Puncte_user)
+			Puncte=Puncte_user,
+			lastSolves=last_solves,
+			Rank=session['Rank'])
 	else:
 		return redirect('/login')

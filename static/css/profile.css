@@ -33,7 +33,6 @@ body{
 .body_part_left{
 	height: 150px;
 	width: 100%;
-	background-color: #13273a;
 	float:left;
 }
 
@@ -51,29 +50,73 @@ body{
 	font-size: 15px;
 	color:white;
 	float:left;
-	width: 420px;
-	background-color: rgb(0,0,0,0.5);
-	height: 420px;
+	width: 28%;
+	background-color: rgb(0,0,0,0.8);
+	max-width: 420px;
 	text-align: left;
 	padding-left: 10px;
 	padding-top: 10px;
+	height: 440px;
 }
 
 .body_part_left_content_up_details_sus{
 	font-size: 15px;
 	color:white;
 	float:left;
-	width: 420px;
-	background-color: rgb(0,0,0,0.5);
+	width: 100%;
 	text-align: center;
 }
+
+
+.body_part_right_content_up_details{
+	width: 70%;
+	height: 440px;
+	padding-top: 10px;
+	float: right;
+}
+
+
+.body_part_right_content_up_details_part{
+	background-color: blue;
+	width: 15%;
+	float:left;
+	margin-right: 10px;
+	margin-top: 10px;
+	height: 100px;
+	min-width: 100px;
+	max-width: 100px;
+}
+
+.body_part_right_content_down_details{
+	font-size: 15px;
+	color:white;
+	float:right;
+	width: 50%;
+	height: 440px;
+	text-align: left;
+	padding-left: 10px;
+	padding-top: 10px;
+}
+
+.body_part_right_content_down_details_part{
+	background-color: white;
+	width: 100%;
+	margin-bottom: 10px;
+	color:black;
+	background-color: rgb(0,0,0,0.2);
+	font-size: 18px;
+	color:white;
+}
+
+
+
 
 
 div.progressbar {
     #background-color: #20201F;
     border-radius: 6px; /* (heightOfInnerDiv / 2) + padding */
     padding: 4px;
-    width:400px;
+    width:90%;
     text-align:right;
 }
 
@@ -83,7 +126,7 @@ div.progressbar2 {
     #background-color: #20201F;                                   
     border-radius: 6px; /* (heightOfInnerDiv / 2) + padding */
     padding: 4px;
-    width:400px;
+    width:90%;
     text-align:right;
 }
 
@@ -91,7 +134,7 @@ div.progressbar2 {
 
 div.progressbars {
     background-color: white;
-    width: 400px; /* Adjust with JavaScript */
+    width:90%;
     height: 2px;
     border-radius: 10px;
     text-align:center;
