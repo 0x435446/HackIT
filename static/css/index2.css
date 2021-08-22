@@ -33,7 +33,6 @@ body{
 .body_part_left{
 	height: 150px;
 	width: 60%;
-	background-color: #13273a;
 	float:left;
 }
 
@@ -53,4 +52,47 @@ body{
 .body_part_right_content{
 	color:white;
 	text-align: center;
+}
+
+
+.start_button{
+	background-color: white;
+	width: 35%;
+	margin: 0 auto;
+	height:150px;
+	border: none;
+	font-size: 30px;
+	color:#4682B4;
+	transition-duration: 1s;
+	margin-top: 10%;
+}
+
+
+.start_button:hover{
+	background-color:#4682B4;
+	width: 35%;
+	margin: 0 auto;
+	height:150px;
+	border: none;
+	font-size: 30px;
+	color: white;
+	margin-top: 10%;
+}
+
+.frame{
+	display: block;
+}
+
+
+.close_button{
+	background-color: white;
+	width: 93%;
+	height:50px;
+	border: none;
+	font-size: 30px;
+	color:#4682B4;
+	transition-duration: 1s;
+	margin-top: -18px;
+	float:left;
+	margin-left: 10px; 
 }

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/scoreboard.css') }}">
+	<title></title>
+</head>
+
+<body>
+
+	<div class='header'>
+
+		<div class='header_center'>
+			<div class='header_section' onclick="location.href='/';">
+				Home
+			</div>	
+			<div class='header_section' onclick="location.href='/challenges';">
+				Challenges
+			</div>	
+			<div class='header_section' onclick="location.href='/profile';">
+				Profile
+			</div>	
+			<div class='header_section' onclick="location.href='/scoreboard';">
+				Scoreboard
+			</div>	
+			<div class='header_section' onclick="location.href='/logout';">
+				Logout
+			</div>	
+		</div>
+	</div>
+
+
+	<div class='body_section'>
+		Scoreboard:
+		<div class='body_part_middle'>
+			<div class='body_part_mid_part'>
+
+				<div class='body_part_middle_part_left_up'>
+					Position
+				</div>
+				<div class='body_part_middle_part_middle_up'>
+					Username
+				</div>
+				<div class='body_part_middle_part_right_up'>
+					Points
+				</div>
+
+			</div>	
+
+
+			{% for item in range(len) %}
+				{% if item == 0 %}
+				<div class='body_part_mid_part'>
+
+						<div class='body_part_middle_part_left_gold'>
+							{{item+1}}
+						</div>
+						<div class='body_part_middle_part_middle_gold'>
+							<a href='/viewProfile/{{Scoreboard[0][item][0]}}'>{{Scoreboard[0][item][0]}}</a>
+						</div>
+						<div class='body_part_middle_part_right_gold'>
+							{{Scoreboard[0][item][1]}}
+						</div>
+				</div>
+				{% endif %}
+
+
+				{% if item == 1 %}
+				<div class='body_part_mid_part'>
+
+						<div class='body_part_middle_part_left_silver'>
+							{{item+1}}
+						</div>
+						<div class='body_part_middle_part_middle_silver'>
+							<a href='/viewProfile/{{Scoreboard[0][item][0]}}'>{{Scoreboard[0][item][0]}}</a>
+						</div>
+						<div class='body_part_middle_part_right_silver'>
+							{{Scoreboard[0][item][1]}}
+						</div>
+				</div>
+				{% endif %}
+
+
+				{% if item == 2 %}
+				<div class='body_part_mid_part'>
+
+						<div class='body_part_middle_part_left_bronze'>
+							{{item+1}}
+						</div>
+						<div class='body_part_middle_part_middle_bronze'>
+							<a href='/viewProfile/{{Scoreboard[0][item][0]}}'>{{Scoreboard[0][item][0]}}</a>
+						</div>
+						<div class='body_part_middle_part_right_bronze'>
+							{{Scoreboard[0][item][1]}}
+						</div>
+				</div>
+
+				{% endif %}
+
+
+				{% if item > 2 %}
+				<div class='body_part_mid_part'>
+
+						<div class='body_part_middle_part_left'>
+							{{item+1}}
+						</div>
+						<div class='body_part_middle_part_middle'>
+							<a href='/viewProfile/{{Scoreboard[0][item][0]}}'>{{Scoreboard[0][item][0]}}</a>
+						</div>
+						<div class='body_part_middle_part_right'>
+							{{Scoreboard[0][item][1]}}
+						</div>
+				</div>
+				{% endif %}
+			{% endfor %}
+
+
+		</div>
+
+	
+
+	</div>
+
+</body>
+</html>

@@ -4,7 +4,9 @@ from flask import request,redirect,session,send_file,send_from_directory
 from hashlib import sha256
 import importlib.util
 import MySQLdb
-
+import random
+import time
+import subprocess
 
 
 app = Flask(__name__)
@@ -20,6 +22,7 @@ app.config['UPLOAD_EXTENSIONS'] = ['.txt']
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 #FlagFlag123.
 
+instances={}
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -70,10 +73,6 @@ def getCategoryDetails():
 			print (str(i[1]),"====",session['ID'])
 			if str(i[1]) == str(session['ID']):
 				solved.append(i[0])
-		'''
-		for i in solved:
-			retSolved.append("|".join(str(v) for v in i))
-		'''
 		print (solved)
 		return "^".join(forret)+"~"+'|'.join(solved)
 	else:
@@ -325,12 +324,219 @@ def profile():
 		data = cursor.fetchall()
 		Puncte_user=data[0][0]
 		print ("rank",session['Rank'])
+
+		cursor.execute("SELECT Nume,Puncte from users Order BY Puncte DESC")
+		data = cursor.fetchall()
+		rezultat = []
+		print (data)
+		Pozitie=0
+		for i in range(len(data)):
+			if session['username'] in data[i]:
+				Pozitie=i
+
 		return render_template('profile.html',
 			Networking_Solved=Networking_Solved, Forensics_Solved=Forensics_Solved, Web_Solved=Web_Solved, Cryptography_Solved=Cryptography_Solved, Reversing_Solved=Reversing_Solved, Pwn_Solved=Pwn_Solved,
 			Total_Networking = Total_Networking, Total_Forensics=Total_Forensics, Total_Web=Total_Web, Total_Crypto=Total_Crypto, Total_Reversing=Total_Reversing,Total_Pwn=Total_Pwn,
 			Username=session['username'],
 			Puncte=Puncte_user,
 			lastSolves=last_solves,
-			Rank=session['Rank'])
+			Rank=session['Rank'],
+			Pozitie=Pozitie+1)
+	else:
+		return redirect('/login')
+
+
+
+@app.route('/scoreboard', methods=['GET', 'POST'])
+def scoreboard():
+	if session['loggedin'] == True:
+
+		db=MySQLdb.connect(host="localhost",user="root",passwd="FlagFlag123.",db="hackit" )
+		cursor = db.cursor()
+		cursor.execute("SELECT Nume,Puncte from users Order BY Puncte DESC")
+		data = cursor.fetchall()
+		rezultat = []
+		print (data)
+		for i in data:
+			rezultat.append(data)
+		return render_template('scoreboard.html',Scoreboard=rezultat,len=len(rezultat))
+	else:
+		return redirect('/login')
+
+
+
+
+@app.route('/viewProfile/<user>', methods=['GET', 'POST'])
+def viewProfile(user):
+	if session['loggedin'] == True:
+		db=MySQLdb.connect(host="localhost",user="root",passwd="FlagFlag123.",db="hackit" )
+		cursor = db.cursor()
+
+		cursor.execute("SELECT * from users WHERE users.Nume='"+str(user)+"'")
+		data = cursor.fetchall()
+		userID=str(data[0][0])
+		userRank=str(data[0][5])
+		print ("USERID:",userID)
+		cursor.execute("SELECT DISTINCT challenges.Nume, solves.ID_user FROM challenges inner join solves ON solves.ID_challenge=challenges.ID WHERE challenges.Categorie='Networking'")
+		data = cursor.fetchall()
+		solved = []
+		last_solves=[]
+		retSolved=[]
+		for i in data:
+			if str(i[1]) == str(userID):
+				solved.append(i[0])
+				last_solves.append(i[0])
+		Networking_Solved = len(solved)
+
+		cursor.execute("SELECT DISTINCT challenges.Nume, solves.ID_user FROM challenges inner join solves ON solves.ID_challenge=challenges.ID WHERE challenges.Categorie='Forensics'")
+		data = cursor.fetchall()
+		solved = []
+		retSolved=[]
+		for i in data:
+			if str(i[1]) == str(userID):
+				solved.append(i[0])
+				last_solves.append(i[0])
+		Forensics_Solved = len(solved)
+
+		cursor.execute("SELECT DISTINCT challenges.Nume, solves.ID_user FROM challenges inner join solves ON solves.ID_challenge=challenges.ID WHERE challenges.Categorie='Web'")
+		data = cursor.fetchall()
+		solved = []
+		retSolved=[]
+		for i in data:
+			if str(i[1]) == str(userID):
+				solved.append(i[0])
+				last_solves.append(i[0])
+		Web_Solved = len(solved)
+
+		cursor.execute("SELECT DISTINCT challenges.Nume, solves.ID_user FROM challenges inner join solves ON solves.ID_challenge=challenges.ID WHERE challenges.Categorie='Cryptography'")
+		data = cursor.fetchall()
+		solved = []
+		retSolved=[]
+		for i in data:
+			if str(i[1]) == str(userID):
+				solved.append(i[0])
+				last_solves.append(i[0])
+		Cryptography_Solved = len(solved)
+
+		cursor.execute("SELECT DISTINCT challenges.Nume, solves.ID_user FROM challenges inner join solves ON solves.ID_challenge=challenges.ID WHERE challenges.Categorie='Reversing'")
+		data = cursor.fetchall()
+		solved = []
+		retSolved=[]
+		for i in data:
+			if str(i[1]) == str(userID):
+				solved.append(i[0])
+				last_solves.append(i[0])
+		Reversing_Solved = len(solved)
+
+		cursor.execute("SELECT DISTINCT challenges.Nume, solves.ID_user FROM challenges inner join solves ON solves.ID_challenge=challenges.ID WHERE challenges.Categorie='Pwn'")
+		data = cursor.fetchall()
+		solved = []
+		retSolved=[]
+		for i in data:
+			if str(i[1]) == str(userID):
+				solved.append(i[0])
+				last_solves.append(i[0])
+		Pwn_Solved = len(solved)
+
+		cursor.execute("SELECT DISTINCT challenges.Nume, solves.ID_user FROM challenges inner join solves ON solves.ID_challenge=challenges.ID WHERE challenges.Categorie='Misc'")
+		data = cursor.fetchall()
+		solved = []
+		retSolved=[]
+		for i in data:
+			if str(i[1]) == str(userID):
+				solved.append(i[0])
+				last_solves.append(i[0])
+		Misc_Solved = len(solved)
+
+		print ("AICI E",last_solves)
+
+		cursor.execute("SELECT challenges.Nume FROM challenges WHERE challenges.Categorie='Networking'")
+		data = cursor.fetchall()
+		Total_Networking=len(data)
+		cursor.execute("SELECT challenges.Nume FROM challenges WHERE challenges.Categorie='Forensics'")
+		data = cursor.fetchall()
+		Total_Forensics=len(data)
+		cursor.execute("SELECT challenges.Nume FROM challenges WHERE challenges.Categorie='Reversing'")
+		data = cursor.fetchall()
+		Total_Reversing=len(data)
+		cursor.execute("SELECT challenges.Nume FROM challenges WHERE challenges.Categorie='Pwn'")
+		data = cursor.fetchall()
+		Total_Pwn=len(data)
+		cursor.execute("SELECT challenges.Nume FROM challenges WHERE challenges.Categorie='Cryptography'")
+		data = cursor.fetchall()
+		Total_Crypto=len(data)
+		cursor.execute("SELECT challenges.Nume FROM challenges WHERE challenges.Categorie='Web'")
+		data = cursor.fetchall()
+		Total_Web=len(data)
+
+		cursor.execute("SELECT users.Puncte FROM users WHERE users.Nume='"+str(user)+"'")
+		data = cursor.fetchall()
+		Puncte_user=data[0][0]
+		print ("rank",userRank)		
+		
+
+		cursor.execute("SELECT Nume,Puncte from users Order BY Puncte DESC")
+		data = cursor.fetchall()
+		rezultat = []
+		print (data)
+		Pozitie=0
+		for i in range(len(data)):
+			if user in data[i]:
+				Pozitie=i+1
+
+
+		return render_template('profile.html',
+			Networking_Solved=Networking_Solved, Forensics_Solved=Forensics_Solved, Web_Solved=Web_Solved, Cryptography_Solved=Cryptography_Solved, Reversing_Solved=Reversing_Solved, Pwn_Solved=Pwn_Solved,
+			Total_Networking = Total_Networking, Total_Forensics=Total_Forensics, Total_Web=Total_Web, Total_Crypto=Total_Crypto, Total_Reversing=Total_Reversing,Total_Pwn=Total_Pwn,
+			Username=user,
+			Puncte=Puncte_user,
+			lastSolves=last_solves,
+			Rank=userRank,
+			Pozitie=Pozitie)
+	else:
+		return redirect('/login')
+
+
+
+
+@app.route('/getInstance', methods=['GET', 'POST'])
+def getInstance():
+	if session['loggedin'] == True:
+
+		#db=MySQLdb.connect(host="localhost",user="root",passwd="FlagFlag123.",db="hackit" )
+		#cursor = db.cursor()
+		#cursor.execute("SELECT Nume,Puncte from users Order BY Puncte DESC")
+		#data = cursor.fetchall()
+		#rezultat = []
+		#print (data)
+		#for i in data:
+			#rezultat.append(data)
+
+		r1 = random.randint(5000, 45000)
+		if session['username'] not in instances:
+			port = str(r1)
+			instances[session['username']]=[str(r1),str(int(time.time()))]
+		else:
+			port = instances[session['username']][0]
+		try:
+			output = subprocess.check_output("sudo ./webshell/build-docker.sh "+port, shell=True).decode()
+			print (output)
+			instances[session['username']].append(output)
+		except:
+			pass
+		return port
+
+	else:
+		return redirect('/login')
+
+
+
+
+@app.route('/closeInstance', methods=['GET', 'POST'])
+def closeInstance():
+	if session['loggedin'] == True:
+		output = subprocess.check_output("sudo docker container stop "+instances[session['username']][2], shell=True).decode()
+		return redirect('/')
+
 	else:
 		return redirect('/login')

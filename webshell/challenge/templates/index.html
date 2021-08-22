@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+	<title></title>
+</head>
+
+<body>
+
+	
+
+	<div class='body_section'>
+
+		<div class='body_part_center'>
+			<div class='body_part_left_content' id='preview'>
+
+			</div>
+		</div>
+
+			<div class='body_part_center_content_down'>
+				<input type="text" id="submit">
+			</div>
+
+	</div>
+
+
+
+</body>
+</html>
+
+<script>
+	document.getElementById('submit').onkeydown = function(event) {
+	    if (event.keyCode == 13) {
+	        var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var response = this.responseText;
+					document.getElementById('submit').value='';
+					document.getElementById('preview').innerHTML=response.replace(/\\r\\n/g, "<br />");
+				}
+			};
+			xhttp.open("POST", "/", true);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp.send("command="+document.getElementById('submit').value);
+	    }
+	}
+</script>

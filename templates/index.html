@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index2.css') }}">
 	<title></title>
 </head>
 
@@ -33,8 +33,11 @@
 	<div class='body_section'>
 
 		<div class='body_part_left'>
-			<div class='body_part_left_content'>
-				Working..
+			<div class='body_part_left_content' id='webshell'>
+				 <button class='start_button' onclick='runDocker()'>
+				 	Get Instance
+				 </button>
+				 <!-- <iframe class='frame' src="http://172.17.0.2:5000/"  frameBorder="0" height="550" width="95%" title="description"></iframe> -->
 			</div>
 		</div>
 
@@ -48,3 +51,51 @@
 
 </body>
 </html>
+
+
+<script type="text/javascript">
+	var delay = ( function() {
+    var timer = 0;
+    return function(callback, ms) {
+        clearTimeout (timer);
+        timer = setTimeout(callback, ms);
+    	};
+	})();
+
+
+
+	function runDocker(){
+
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var response = this.responseText;
+				delay(function(){
+				document.getElementById('webshell').innerHTML="<iframe class='frame' src=\"http://localhost:"+response+"/\"  frameBorder=\"0\" height=\"550\" width=\"95%\" title=\"description\"></iframe><br>\
+				 <button class='close_button' onclick='closeDocker()'>\
+				 	Close Instance\
+				 </button>"
+				}, 2000 );
+			}
+		};
+		xhttp.open("POST", "/getInstance", true);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhttp.send("");
+		}
+
+
+
+	function closeDocker(){
+
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var response = this.responseText;
+				location.href = '/';
+			}
+		};
+		xhttp.open("POST", "/closeInstance", true);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhttp.send("");
+		}
+</script>
