@@ -71,7 +71,7 @@
 			if (this.readyState == 4 && this.status == 200) {
 				var response = this.responseText;
 				delay(function(){
-				document.getElementById('webshell').innerHTML="<iframe class='frame' src=\"http://localhost:"+response+"/\"  frameBorder=\"0\" height=\"550\" width=\"95%\" title=\"description\"></iframe><br>\
+				document.getElementById('webshell').innerHTML="<iframe class='frame' src=\"http://192.168.1.7:"+response+"/\"  frameBorder=\"0\" height=\"550\" width=\"95%\" title=\"description\"></iframe><br>\
 				 <button class='close_button' onclick='closeDocker()'>\
 				 	Close Instance\
 				 </button>"
